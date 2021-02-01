@@ -8,6 +8,10 @@ LABEL MAINTAINER="TheHive Project <support@thehive-project.org>"
 
 ARG THEHIVE_VERSION=develop
 
+# added https://www.scala-sbt.org/download.html | file sbt 1.3.8 > sbt-launch.jar into the same directory as this dockerfile
+RUN mkdir -p /root/.sbt/launchers/1.3.8
+COPY sbt-launch.jar /root/.sbt/launchers/1.3.8
+
 RUN apt update && \
   apt install -y apt-transport-https && \
   curl -sL https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash - && \
