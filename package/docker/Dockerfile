@@ -21,7 +21,7 @@ RUN apt update && \
       clone \
       --branch=$THEHIVE_VERSION \
       --depth=1 \
-      https://github.com/TheHive-Project/TheHive.git && \
+      https://github.com/sho-illuminate/TheHive.git && \
   echo '{"allow_root": true}' > /root/.bowerrc && \
   cd TheHive && \
   ./sbt clean stage && \
