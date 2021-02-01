@@ -8,13 +8,13 @@ LABEL MAINTAINER="TheHive Project <support@thehive-project.org>"
 
 ARG THEHIVE_VERSION=develop
 
-RUN yum update && \
-#  apt install -y apt-transport-https && \
+RUN apt update && \
+  apt install -y apt-transport-https && \
   curl -sL https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash - && \
   export NVM_DIR="${HOME}/.nvm" && \
   . "$NVM_DIR/nvm.sh" && \
   nvm install --lts && \
-  yum install -y git && \
+  apt-get install -y git && \
   npm install -g grunt-cli \
                  bower && \
   git -c advice.detachedHead=false \
@@ -28,7 +28,7 @@ RUN yum update && \
   mv /TheHive/target/universal/stage /opt/thehive && \
   mv /TheHive/package/docker/entrypoint /opt/thehive/entrypoint && \
   mkdir /var/log/thehive && \
-  yum purge -y git && \
+  apt-get purge -y git && \
   rm -rf /TheHive \
          /root/* \
          /root/.nvm \
@@ -41,10 +41,10 @@ FROM openjdk:8
 COPY --from=build-env /opt/thehive /opt/thehive
 COPY --from=build-env /var/log/thehive /var/log/thehive
 
-RUN yum update && \
-  yum upgrade -y && \
-  yum autoclean -y -q && \
-  yum autoremove -y -q && \
+RUN apt update && \
+  apt upgrade -y && \
+  apt autoclean -y -q && \
+  apt autoremove -y -q && \
   rm -rf /var/lib/apt/lists/* && \
   ( type groupadd 1>/dev/null 2>&1 && \
     groupadd -g 1000 thehive || \
