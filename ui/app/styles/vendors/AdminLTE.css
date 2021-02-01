@@ -195,6 +195,18 @@ a:focus {
   max-height: 100px;
   z-index: 1030;
 }
+
+/* Banner */
+.banner {
+  height: 20px;   
+}
+.banner p {
+  color: black;
+  text-align: center;
+  padding: 2px 0;
+  background: rgb(82,205,66);
+}
+
 .main-header .navbar {
   -webkit-transition: margin-left 0.3s ease-in-out;
   -o-transition: margin-left 0.3s ease-in-out;
