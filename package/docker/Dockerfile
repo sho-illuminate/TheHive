@@ -6,7 +6,7 @@ FROM openjdk:8 as build-env
 
 LABEL MAINTAINER="TheHive Project <support@thehive-project.org>"
 
-ARG THEHIVE_VERSION=develop
+# ARG THEHIVE_VERSION=develop
 
 # added https://www.scala-sbt.org/download.html | file sbt 1.3.8 > sbt-launch.jar into the same directory as this dockerfile
 RUN mkdir -p /root/.sbt/launchers/1.3.8
@@ -21,25 +21,18 @@ RUN apt update && \
   apt-get install -y git && \
   npm install -g grunt-cli \
                  bower && \
-  git -c advice.detachedHead=false \
-      clone \
-      --branch=$THEHIVE_VERSION \
-      --depth=1 \
-      https://github.com/sho-illuminate/TheHive.git && \
+#  git -c advice.detachedHead=false \
+#      clone \
+#      --branch=$THEHIVE_VERSION \
+#      --depth=1 \
+#      https://github.com/sho-illuminate/TheHive.git && \
+  git clone https://github.com/sho-illuminate/TheHive.git && \
   echo '{"allow_root": true}' > /root/.bowerrc && \
   cd TheHive && \
   ./sbt clean stage && \
   mv /TheHive/target/universal/stage /opt/thehive && \
   mv /TheHive/package/docker/entrypoint /opt/thehive/entrypoint && \
-  mkdir /var/log/thehive && \
-  apt-get purge -y git && \
-  rm -rf /TheHive \
-         /root/* \
-         /root/.nvm \
-         /root/.m2 \
-         /root/.ivy2 \
-         /root/.sbt \
-         /var/lib/apt/lists/*
+  mkdir /var/log/thehive
 
 FROM openjdk:8
 COPY --from=build-env /opt/thehive /opt/thehive
@@ -58,9 +51,11 @@ RUN apt update && \
     adduser -S -u 1000 -G thehive thehive ) && \
   mkdir /etc/thehive && \
   cp /opt/thehive/conf/logback.xml /etc/thehive/logback.xml && \
-  chown -R root:root /opt/thehive && \
-  chown -R thehive:thehive /var/log/thehive /etc/thehive && \
-  chmod +x /opt/thehive/entrypoint
+#  chown -R root:root /opt/thehive && \
+#  chown -R thehive:thehive /var/log/thehive /etc/thehive && \
+#  chmod +x /opt/thehive/entrypoint
+  chown -R thehive:thehive /opt/thehive && \
+  chown -R thehive:thehive /var/log/thehive /etc/thehive
 
 USER thehive
 
