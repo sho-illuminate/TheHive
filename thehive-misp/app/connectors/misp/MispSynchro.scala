@@ -41,7 +41,7 @@ class MispSynchro @Inject()(
   private[misp] lazy val logger   = Logger(getClass)
   private[misp] lazy val alertSrv = alertSrvProvider.get
   implicit val ec: ExecutionContext = try {
-    system.dispatchers.lookup("misp-thread-pools")
+    system.dispatchers.lookup("misp-thread-pool")
   } catch {
     case e: Throwable =>
       logger.warn(s"Unable to use MISP specific dispatcher ($e). Fallback  to default dispatcher")
