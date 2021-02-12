@@ -40,7 +40,7 @@
     <!-- logger name="org.elastic4play.database.DBFind" level="DEBUG" /-->
 
     <!-- Uncomment the next line to log debug information on Misp synchronization -->
-    <logger name="connectors.misp" level="DEBUG" />
+    <!-- <logger name="connectors.misp" level="DEBUG" /-->
 
     <!-- Uncomment the next lines to log debug information on stream -->
     <!--logger name="services.LocalStreamActor" level="DEBUG" /-->
